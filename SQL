@@ -1,0 +1,21 @@
+CREATE TABLE Parents (
+    parent_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password CHAR(50) NOT NULL,
+    display_name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Monitors (
+    monitor_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password CHAR(50) NOT NULL,
+    display_name VARCHAR(50) NOT NULL,
+    certified BOOLEAN NOT NULL
+);
+
+ALTER TABLE Parents
+    ALTER COLUMN parent_id SET SERIAL

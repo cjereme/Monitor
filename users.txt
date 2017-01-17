@@ -1,0 +1,239 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: foo; Type: TABLE; Schema: public; Owner: christine; Tablespace: 
+--
+
+CREATE TABLE foo (
+    id integer NOT NULL,
+    name character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.foo OWNER TO christine;
+
+--
+-- Name: foo_id_seq; Type: SEQUENCE; Schema: public; Owner: christine
+--
+
+CREATE SEQUENCE foo_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.foo_id_seq OWNER TO christine;
+
+--
+-- Name: foo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: christine
+--
+
+ALTER SEQUENCE foo_id_seq OWNED BY foo.id;
+
+
+--
+-- Name: monitors; Type: TABLE; Schema: public; Owner: christine; Tablespace: 
+--
+
+CREATE TABLE monitors (
+    monitor_id integer NOT NULL,
+    first_name character varying(255) NOT NULL,
+    last_name character varying(255) NOT NULL,
+    email character varying(100) NOT NULL,
+    password character(50) NOT NULL,
+    display_name character varying(50) NOT NULL,
+    certified boolean NOT NULL
+);
+
+
+ALTER TABLE public.monitors OWNER TO christine;
+
+--
+-- Name: monitors_monitor_id_seq; Type: SEQUENCE; Schema: public; Owner: christine
+--
+
+CREATE SEQUENCE monitors_monitor_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.monitors_monitor_id_seq OWNER TO christine;
+
+--
+-- Name: monitors_monitor_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: christine
+--
+
+ALTER SEQUENCE monitors_monitor_id_seq OWNED BY monitors.monitor_id;
+
+
+--
+-- Name: parents; Type: TABLE; Schema: public; Owner: christine; Tablespace: 
+--
+
+CREATE TABLE parents (
+    parent_id integer NOT NULL,
+    first_name character varying(255) NOT NULL,
+    last_name character varying(255) NOT NULL,
+    email character varying(100) NOT NULL,
+    password character(50) NOT NULL,
+    display_name character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.parents OWNER TO christine;
+
+--
+-- Name: parents_parent_id_seq; Type: SEQUENCE; Schema: public; Owner: christine
+--
+
+CREATE SEQUENCE parents_parent_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.parents_parent_id_seq OWNER TO christine;
+
+--
+-- Name: parents_parent_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: christine
+--
+
+ALTER SEQUENCE parents_parent_id_seq OWNED BY parents.parent_id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: christine
+--
+
+ALTER TABLE ONLY foo ALTER COLUMN id SET DEFAULT nextval('foo_id_seq'::regclass);
+
+
+--
+-- Name: monitor_id; Type: DEFAULT; Schema: public; Owner: christine
+--
+
+ALTER TABLE ONLY monitors ALTER COLUMN monitor_id SET DEFAULT nextval('monitors_monitor_id_seq'::regclass);
+
+
+--
+-- Name: parent_id; Type: DEFAULT; Schema: public; Owner: christine
+--
+
+ALTER TABLE ONLY parents ALTER COLUMN parent_id SET DEFAULT nextval('parents_parent_id_seq'::regclass);
+
+
+--
+-- Data for Name: foo; Type: TABLE DATA; Schema: public; Owner: christine
+--
+
+COPY foo (id, name) FROM stdin;
+\.
+
+
+--
+-- Name: foo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: christine
+--
+
+SELECT pg_catalog.setval('foo_id_seq', 1, false);
+
+
+--
+-- Data for Name: monitors; Type: TABLE DATA; Schema: public; Owner: christine
+--
+
+COPY monitors (monitor_id, first_name, last_name, email, password, display_name, certified) FROM stdin;
+1	Adam	Smith	asmith@email.com	password                                          	Adam Smith	t
+2	Anne	Smith	anne@email.com	password                                          	Anne Smith	t
+\.
+
+
+--
+-- Name: monitors_monitor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: christine
+--
+
+SELECT pg_catalog.setval('monitors_monitor_id_seq', 2, true);
+
+
+--
+-- Data for Name: parents; Type: TABLE DATA; Schema: public; Owner: christine
+--
+
+COPY parents (parent_id, first_name, last_name, email, password, display_name) FROM stdin;
+2	John	Doe	jd@email.com	password                                          	John Doe
+3	Jane	Doe	jand@email.com	password                                          	Jane Doe
+\.
+
+
+--
+-- Name: parents_parent_id_seq; Type: SEQUENCE SET; Schema: public; Owner: christine
+--
+
+SELECT pg_catalog.setval('parents_parent_id_seq', 3, true);
+
+
+--
+-- Name: monitors_pkey; Type: CONSTRAINT; Schema: public; Owner: christine; Tablespace: 
+--
+
+ALTER TABLE ONLY monitors
+    ADD CONSTRAINT monitors_pkey PRIMARY KEY (monitor_id);
+
+
+--
+-- Name: parents_pkey; Type: CONSTRAINT; Schema: public; Owner: christine; Tablespace: 
+--
+
+ALTER TABLE ONLY parents
+    ADD CONSTRAINT parents_pkey PRIMARY KEY (parent_id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
